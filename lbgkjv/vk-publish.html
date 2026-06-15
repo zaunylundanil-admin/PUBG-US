@@ -1,0 +1,675 @@
+<script src="script.js"></script>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Публикация постов - PUBG UC Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pubg-red: #ff3a2d;
+            --pubg-dark: #1c1c1e;
+            --pubg-orange: #ff9210;
+            --pubg-blue: #ff3a2d;
+            --pubg-light: #f4f4f4;
+            --pubg-dark-bg: #121212;
+            --pubg-green: #4CAF50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--pubg-dark-bg);
+            color: var(--pubg-light);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            background-color: rgba(28, 28, 30, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pubg-light);
+        }
+        
+        .logo-text span {
+            color: var(--pubg-red);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--pubg-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--pubg-red);
+        }
+        
+        /* Main Content */
+        .publish-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+            color: var(--pubg-light);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--pubg-red);
+        }
+        
+        .publish-container {
+            background: linear-gradient(145deg, #1e1e20, #2a2a2d);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--pubg-light);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--pubg-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--pubg-red);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .char-counter {
+            text-align: right;
+            margin-top: 5px;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--pubg-red);
+            color: var(--pubg-light);
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background-color: var(--pubg-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 146, 16, 0.4);
+        }
+        
+        .btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-success {
+            background-color: var(--pubg-green);
+        }
+        
+        .btn-success:hover {
+            background-color: #3d8b40;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .notification {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .notification.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--pubg-green);
+            color: var(--pubg-green);
+        }
+        
+        .notification.error {
+            background: rgba(255, 58, 45, 0.2);
+            border: 1px solid var(--pubg-red);
+            color: var(--pubg-red);
+        }
+        
+        .preview-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .preview-title {
+            margin-bottom: 20px;
+            color: var(--pubg-light);
+            text-align: center;
+        }
+        
+        .post-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--pubg-orange);
+        }
+        
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .group-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--pubg-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .group-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .preview-date {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .preview-text {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--pubg-dark);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: var(--pubg-light);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--pubg-red);
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--pubg-red);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--pubg-red);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .publish-container {
+                padding: 25px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-text">PUBG <span>UC</span> STORE</div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#packages">Пакеты UC</a></li>
+                    <li><a href="index.html#how-it-works">Как купить</a></li>
+                    <li><a href="index.html#advantages">Преимущества</a></li>
+                    <li><a href="index.html#reviews">Отзывы</a></li>
+                    <li><a href="index.html#faq">Вопросы</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <li><a href="login.html">Вход</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Publish Section -->
+    <section class="publish-section">
+        <div class="container">
+            <h2 class="section-title">Публикация поста в сообществе</h2>
+            
+            <div class="publish-container">
+                <div id="notification" class="notification"></div>
+                
+                <form id="post-form">
+                    <div class="form-group">
+                        <label for="post-text">Текст поста *</label>
+                        <textarea 
+                            id="post-text" 
+                            class="form-control" 
+                            placeholder="Напишите текст вашего поста здесь..." 
+                            required
+                            maxlength="4000"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="char-count">0</span>/4000 символов
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="post-image">Изображение (опционально)</label>
+                        <input 
+                            type="file" 
+                            id="post-image" 
+                            class="form-control" 
+                            accept="image/*"
+                        >
+                        <small style="color: #aaa; margin-top: 5px; display: block;">
+                            Поддерживаемые форматы: JPG, PNG, GIF. Максимальный размер: 5MB
+                        </small>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="from-group" checked>
+                        <label for="from-group">Опубликовать от имени сообщества</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="signed" checked>
+                        <label for="signed">Подписать автора (администратора)</label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" id="preview-btn" class="btn btn-secondary">
+                            Предпросмотр
+                        </button>
+                        <button type="submit" id="publish-btn" class="btn btn-success">
+                            Опубликовать
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="preview-section" id="preview-section" style="display: none;">
+                    <h3 class="preview-title">Предпросмотр поста</h3>
+                    <div class="post-preview">
+                        <div class="preview-header">
+                            <div class="group-avatar">PUBG</div>
+                            <div class="group-info">
+                                <h3>PUBG UC Store</h3>
+                                <div class="preview-date" id="preview-date">Сегодня</div>
+                            </div>
+                        </div>
+                        <div class="preview-text" id="preview-text"></div>
+                        <img id="preview-image" class="preview-image" src="" alt="Предпросмотр изображения">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Мы специализируемся на продаже UC для PUBG Mobile с 2018 года. Наша цель - предоставлять быстрый и надежный сервис по лучшим ценам.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-envelope"></i> support@pubguc.ru</p>
+                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    <p><i class="fab fa-vk"></i> @pubguc_support</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ссылки</h3>
+                    <a href="index.html#packages">Пакеты UC</a>
+                    <a href="index.html#how-it-works">Как купить</a>
+                    <a href="index.html#advantages">Преимущества</a>
+                    <a href="index.html#faq">Вопросы и ответы</a>
+                    <a href="vk-publish.html">Публикация ВК</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PUBG UC Store. Все права защищены. PUBG является зарегистрированной торговой маркой компании Krafton, Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const ACCESS_TOKEN = 'vk1.a.djoB47VrNeQbWShzI5zxPnDqmZ2Z8SbEtYYzlvvzCMkbRT6GbF24eTDXxO2TjFCW54a9TqPS7vMazaUxnyMEsndVA5PIsvHzUhZeWz4vEXrWJJFQFzvhR3qD2ZCppIXHI6hrbje-eeBHzTQiogsG8MRbmAatvFDx5VcdSdszfbe7gfPaHGZWF0UXe62nEpVnNvuVosGfEs91RLxINV0hRw';
+    const GROUP_ID = '233812266';
+
+    const postForm = document.getElementById('post-form');
+    const postText = document.getElementById('post-text');
+    const ownerInput = document.createElement('input');
+    ownerInput.type = 'text';
+    ownerInput.placeholder = 'owner_id фото (например, 233812266)';
+    ownerInput.id = 'owner-id-photo';
+    ownerInput.className = 'form-control';
+    ownerInput.style = 'margin-bottom:10px;';
+
+    const photoInput = document.createElement('input');
+    photoInput.type = 'text';
+    photoInput.placeholder = 'photo_id (например, 456239021)';
+    photoInput.id = 'photo-id';
+    photoInput.className = 'form-control';
+    photoInput.style = 'margin-bottom:10px;';
+
+    const imageField = document.getElementById('post-image');
+    imageField.parentNode.insertBefore(ownerInput, imageField.nextSibling);
+    imageField.parentNode.insertBefore(photoInput, ownerInput.nextSibling);
+
+    const charCount = document.getElementById('char-count');
+    const previewBtn = document.getElementById('preview-btn');
+    const publishBtn = document.getElementById('publish-btn');
+    const previewSection = document.getElementById('preview-section');
+    const previewText = document.getElementById('preview-text');
+    const previewImage = document.getElementById('preview-image');
+    const previewDate = document.getElementById('preview-date');
+    const notification = document.getElementById('notification');
+
+    postText.addEventListener('input', function () {
+        charCount.textContent = this.value.length;
+    });
+
+    
+    previewBtn.addEventListener('click', function () {
+        const text = postText.value.trim();
+        const ownerId = ownerInput.value.trim();
+        const photoId = photoInput.value.trim();
+        if (!text) {
+            showNotification('Введите текст поста для предпросмотра', 'error');
+            return;
+        }
+        previewText.innerHTML = formatPostText(text);
+        previewDate.textContent = getCurrentDate();
+        // Если введены photo_id и owner_id, показываем фото из VK
+        if (ownerId && photoId) {
+            previewImage.src = `https://vk.com/images/${ownerId}_${photoId}.jpg`; // Это НЕ рабочий URL для ваших фото, используйте VK CDN, например, возьми ссылку на саму фотку из vk.com/wall или vk.com/photo.... и скопируй её
+            previewImage.style.display = 'block';
+        }
+        else if (imageField.files.length > 0) { // Альтернатива: локальная загрузка
+            const file = imageField.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+        else {
+            previewImage.style.display = 'none';
+        }
+        previewSection.style.display = 'block';
+    });
+
+    postForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const text = postText.value.trim();
+        if (!text) {
+            showNotification('Введите текст поста', 'error');
+            return;
+        }
+        publishBtn.disabled = true;
+        publishBtn.textContent = 'Публикация...';
+        try {
+            await publishPost(text);
+            showNotification('Пост успешно опубликован!', 'success');
+            postForm.reset();
+            charCount.textContent = '0';
+            previewSection.style.display = 'none';
+        } catch (error) {
+            console.error('Ошибка публикации:', error);
+            showNotification('Ошибка: ' + error.message, 'error');
+        } finally {
+            publishBtn.disabled = false;
+            publishBtn.textContent = 'Опубликовать';
+        }
+    });
+
+    async function publishPost(text) {
+        const params = new URLSearchParams({
+            owner_id: `-${GROUP_ID}`,
+            message: text,
+            from_group: document.getElementById('from-group').checked ? 1 : 0,
+            signed: document.getElementById('signed').checked ? 1 : 0,
+            access_token: ACCESS_TOKEN,
+            v: '5.131'
+        });
+        const ownerId = ownerInput.value.trim();
+        const photoId = photoInput.value.trim();
+        if (ownerId && photoId) {
+            // Добавляем фото по id из VK
+            params.append('attachments', `photo${ownerId}_${photoId}`);
+        }
+        // Стандартный POST
+        const response = await fetch('https://api.vk.com/method/wall.post', {
+            method: 'POST',
+            body: params
+        });
+        const data = await response.json();
+        if (data.error) { throw new Error(data.error.error_msg); }
+        return data.response;
+    }
+
+    function formatPostText(text) {
+        return text.replace(/\n/g, '<br>');
+    }
+    function getCurrentDate() {
+        const now = new Date();
+        return now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+    function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.style.display = 'block';
+        setTimeout(() => { notification.style.display = 'none'; }, 5000);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        charCount.textContent = '0';
+    });
+</script>
+
+</body>
+</html>
