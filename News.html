@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - PUBG UC Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pubg-red: #ff3a2d;
+            --pubg-dark: #1c1c1e;
+            --pubg-orange: #ff9210;
+            --pubg-blue: #ff3a2d;
+            --pubg-light: #f4f4f4;
+            --pubg-dark-bg: #121212;
+            --pubg-green: #4CAF50;
+            --pubg-yellow: #ffc107;
+            --pubg-purple: #9c27b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--pubg-dark-bg);
+            color: var(--pubg-light);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(135deg, rgba(114, 26, 26, 0.9) 0%, rgba(209, 104, 34, 0.8) 50%, rgba(0, 0, 255, 0.7) 100%),
+                radial-gradient(circle at 20% 80%, rgba(255, 58, 45, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 146, 16, 0.1) 0%, transparent 40%);
+            background-size: cover, 200% 200%, 200% 200%;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            background-color: rgba(28, 28, 30, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--pubg-light);
+        }
+
+        .logo-text span {
+            color: var(--pubg-red);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: var(--pubg-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            color: var(--pubg-red);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--pubg-red);
+            color: var(--pubg-light);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: var(--pubg-orange);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #666;
+        }
+
+        .btn-success {
+            background-color: var(--pubg-green);
+        }
+
+        /* User Menu Styles */
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--pubg-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-name {
+            color: var(--pubg-light);
+            font-weight: 500;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #1e1e20, #2a2a2d);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--pubg-red);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--pubg-red);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--pubg-light);
+            border-bottom: 3px solid var(--pubg-orange);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+        }
+
+        .form-footer a {
+            color: var(--pubg-orange);
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--pubg-green);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .notification.error {
+            background: var(--pubg-red);
+        }
+
+        .notification.hiding {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* Main Content */
+        .news-section {
+            padding: 80px 0 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+            color: var(--pubg-light);
+            position: relative;
+            padding-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--pubg-red);
+        }
+
+        /* News Tabs */
+        .news-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--pubg-light);
+        }
+
+        .tab-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--pubg-orange);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .news-card {
+            background: linear-gradient(145deg, #1e1e20, #2a2a2d);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--pubg-orange);
+            box-shadow: 0 15px 30px rgba(255, 146, 16, 0.2);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            color: var(--pubg-orange);
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .news-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--pubg-light);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+        }
+
+        .news-excerpt {
+            color: #aaa;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            color: var(--pubg-orange);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--pubg-red);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: linear-gradient(145deg, #1e1e20, #2a2a2d);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--pubg-red);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .admin-panel h3 {
+            margin-bottom: 20px;
+            color: var(--pubg-light);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--pubg-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--pubg-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--pubg-red);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* VK Import */
+        .vk-import {
+            background: linear-gradient(145deg, #1e1e20, #2a2a2d);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--pubg-blue);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .vk-import h3 {
+            margin-bottom: 20px;
+            color: var(--pubg-light);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .notification {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .notification.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--pubg-green);
+            color: var(--pubg-green);
+        }
+
+        .notification.error {
+            background: rgba(255, 58, 45, 0.2);
+            border: 1px solid var(--pubg-red);
+            color: var(--pubg-red);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--pubg-dark);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: var(--pubg-light);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--pubg-red);
+        }
+
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--pubg-red);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--pubg-red);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .user-menu {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+            }
+        }
+
+        /* News Filters */
+        .news-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: var(--pubg-light);
+            font-size: 16px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            border-color: var(--pubg-orange);
+            color: var(--pubg-light);
+            background: rgba(255, 146, 16, 0.1);
+        }
+
+        /* No News Message */
+        .no-news {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .no-news i {
+            font-size: 60px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .no-news h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--pubg-light);
+        }
+
+        .no-news p {
+            color: #aaa;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-text">PUBG <span>UC</span> STORE</div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#packages">Пакеты UC</a></li>
+                    <li><a href="index.html#how-it-works">Как купить</a></li>
+                    <li><a href="index.html#advantages">Преимущества</a></li>
+                    <li><a href="index.html#reviews">Отзывы</a></li>
+                    <li><a href="index.html#faq">Вопросы</a></li>
+                    <li><a href="news.html" class="active">Новости</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <li id="user-section">
+                        <div id="guest-menu">
+                            <a href="#" id="login-btn" class="btn btn-secondary">Войти</a>
+                        </div>
+                        <div id="user-menu" style="display: none;" class="user-menu">
+                            <div class="user-avatar" id="user-avatar"></div>
+                            <span class="user-name" id="user-name"></span>
+                            <a href="#" id="logout-btn" class="btn">Выйти</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">Новости и обновления</h2>
+            
+            <!-- News Tabs -->
+            <div class="news-tabs">
+                <button class="tab-btn active" data-tab="all-news">Все новости</button>
+                <button class="tab-btn" data-tab="vk-news">Из ВКонтакте</button>
+                <button class="tab-btn" data-tab="site-news">Сайт новости</button>
+            </div>
+
+            <!-- News Filters -->
+            <div class="news-filters">
+                <div class="search-box">
+                    <input type="text" id="news-search" placeholder="Поиск новостей...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="updates">Обновления</button>
+                    <button class="filter-btn" data-filter="events">События</button>
+                    <button class="filter-btn" data-filter="promotions">Акции</button>
+                </div>
+            </div>
+
+            <!-- Admin Panel (visible only for admins) -->
+            <div id="admin-panel" class="admin-panel" style="display: none;">
+                <h3><i class="fas fa-cog"></i> Панель администратора</h3>
+                <form id="news-form">
+                    <div class="form-group">
+                        <label for="news-title">Заголовок новости</label>
+                        <input type="text" id="news-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-content">Текст новости</label>
+                        <textarea id="news-content" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-category">Категория</label>
+                        <select id="news-category" class="form-control">
+                            <option value="updates">Обновления</option>
+                            <option value="events">События</option>
+                            <option value="promotions">Акции</option>
+                            <option value="general">Общее</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="news-image">Изображение (URL)</label>
+                        <input type="text" id="news-image" class="form-control" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Опубликовать новость</button>
+                        <button type="button" id="clear-form" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- VK Import Panel (visible only for admins) -->
+            <div id="vk-import" class="vk-import" style="display: none;">
+                <h3><i class="fab fa-vk"></i> Импорт из ВКонтакте</h3>
+                <div id="vk-notification" class="notification"></div>
+                <form id="vk-form">
+                    <div class="form-group">
+                        <label for="vk-post-id">ID поста из ВК</label>
+                        <input type="text" id="vk-post-id" class="form-control" placeholder="-123456789_12345" required>
+                        <small style="color: #aaa; margin-top: 5px; display: block;">
+                            Формат: -ID_Группы_ID_Поста (например: -123456789_12345)
+                        </small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn">Импортировать пост</button>
+                        <button type="button" id="fetch-vk-posts" class="btn btn-secondary">Загрузить последние посты</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- News Content -->
+            <div class="tab-content active" id="all-news">
+                <div class="news-grid" id="news-container">
+                    <!-- News will be loaded here -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="vk-news">
+                <div class="news-grid" id="vk-news-container">
+                    <!-- VK news will be loaded here -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="site-news">
+                <div class="news-grid" id="site-news-container">
+                    <!-- Site news will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 40px;">
+                <button id="load-more" class="btn">Загрузить еще</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Мы специализируемся на продаже UC для PUBG Mobile с 2018 года. Наша цель - предоставлять быстрый и надежный сервис по лучшим ценам.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-envelope"></i> support@pubguc.ru</p>
+                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    <p><i class="fab fa-vk"></i> Напишите нам в ВКонтакте</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ссылки</h3>
+                    <a href="index.html#packages">Пакеты UC</a>
+                    <a href="index.html#how-it-works">Как купить</a>
+                    <a href="index.html#advantages">Преимущества</a>
+                    <a href="index.html#reviews">Отзывы</a>
+                    <a href="index.html#faq">Вопросы и ответы</a>
+                    <a href="news.html">Новости</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 PUBG UC STORE. Все права защищены. PUBG является зарегистрированной торговой маркой компании Krafton, Inc. Наш сайт не affiliated с Krafton, Inc.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Auth System
+        const AuthManager = {
+            STORAGE_KEY: 'pubg_uc_current_user',
+            USERS_KEY: 'pubg_uc_users',
+            ADMIN_EMAIL: 'admin@pubguc.ru',
+            
+            init() {
+                this.createDefaultAdmin();
+                this.checkAuthState();
+                this.setupEventListeners();
+                console.log('🔐 Auth system initialized');
+            },
+
+            createDefaultAdmin() {
+                const users = JSON.parse(localStorage.getItem(this.USERS_KEY)) || [];
+                const adminExists = users.find(user => user.email === this.ADMIN_EMAIL);
+                
+                if (!adminExists) {
+                    const adminUser = {
+                        id: 1,
+                        name: 'Administrator',
+                        email: this.ADMIN_EMAIL,
+                        password: 'admin123',
+                        isAdmin: true,
+                        registrationDate: new Date().toISOString(),
+                        pubgId: ''
+                    };
+                    users.push(adminUser);
+                    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+                    console.log('🔐 Default admin user created');
+                }
+            },
+
+            checkAuthState() {
+                const currentUser = this.getCurrentUser();
+                this.updateUI(currentUser);
+                this.updateAdminPanel(currentUser);
+            },
+
+            getCurrentUser() {
+                try {
+                    return JSON.parse(localStorage.getItem(this.STORAGE_KEY));
+                } catch (error) {
+                    console.error('Error getting current user:', error);
+                    return null;
+                }
+            },
+
+            isAdmin(user = null) {
+                const currentUser = user || this.getCurrentUser();
+                return currentUser && currentUser.isAdmin === true;
+            },
+
+            updateUI(user) {
+                const guestMenu = document.getElementById('guest-menu');
+                const userMenu = document.getElementById('user-menu');
+                const userName = document.getElementById('user-name');
+                const userAvatar = document.getElementById('user-avatar');
+
+                if (user) {
+                    // Пользователь авторизован
+                    if (guestMenu) guestMenu.style.display = 'none';
+                    if (userMenu) userMenu.style.display = 'flex';
+                    if (userName) userName.textContent = user.name;
+                    if (userAvatar) {
+                        if (this.isAdmin(user)) {
+                            userAvatar.innerHTML = '<i class="fas fa-crown"></i>';
+                            userAvatar.style.background = 'linear-gradient(135deg, #FFD700, #FFA500)';
+                        } else {
+                            const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                            userAvatar.textContent = initials;
+                        }
+                    }
+                } else {
+                    // Гость
+                    if (guestMenu) guestMenu.style.display = 'block';
+                    if (userMenu) userMenu.style.display = 'none';
+                }
+            },
+
+            updateAdminPanel(user) {
+                const isAdmin = this.isAdmin(user);
+                const adminPanel = document.getElementById('admin-panel');
+                const vkImport = document.getElementById('vk-import');
+                
+                if (adminPanel) adminPanel.style.display = isAdmin ? 'block' : 'none';
+                if (vkImport) vkImport.style.display = isAdmin ? 'block' : 'none';
+            },
+
+            setupEventListeners() {
+                // Кнопки входа и выхода
+                const loginBtn = document.getElementById('login-btn');
+                const logoutBtn = document.getElementById('logout-btn');
+
+                if (loginBtn) {
+                    loginBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.showAuthModal('login');
+                    });
+                }
+
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.logout();
+                    });
+                }
+
+                // Обработчики для модальных окон
+                this.setupModalHandlers();
+            },
+
+            setupModalHandlers() {
+                // Закрытие модальных окон
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal') || e.target.classList.contains('close')) {
+                        this.closeModals();
+                    }
+                });
+
+                // Переключение между вкладками
+                const authTabs = document.querySelectorAll('.auth-tab');
+                authTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabName = tab.getAttribute('data-tab');
+                        this.switchAuthTab(tabName);
+                    });
+                });
+
+                // Переключение между формами
+                const switchToRegister = document.querySelector('.switch-to-register');
+                const switchToLogin = document.querySelector('.switch-to-login');
+
+                if (switchToRegister) {
+                    switchToRegister.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.switchAuthTab('register');
+                    });
+                }
+
+                if (switchToLogin) {
+                    switchToLogin.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.switchAuthTab('login');
+                    });
+                }
+
+                // Обработка форм
+                const loginForm = document.getElementById('loginForm');
+                const registerForm = document.getElementById('registerForm');
+
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handleLogin();
+                    });
+                }
+
+                if (registerForm) {
+                    registerForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handleRegister();
+                    });
+                }
+            },
+
+            showAuthModal(defaultTab = 'login') {
+                this.closeModals();
+                
+                // Создаем модальное окно авторизации
+                const authModalHTML = `
+                    <div class="modal auth-modal" id="authModal" style="display: block;">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <div class="auth-tabs">
+                                <button class="auth-tab ${defaultTab === 'login' ? 'active' : ''}" data-tab="login">Вход</button>
+                                <button class="auth-tab ${defaultTab === 'register' ? 'active' : ''}" data-tab="register">Регистрация</button>
+                            </div>
+                            
+                            <form id="loginForm" class="auth-form ${defaultTab === 'login' ? 'active' : ''}">
+                                <div class="form-group">
+                                    <label for="loginEmail">Email</label>
+                                    <input type="email" id="loginEmail" class="form-control" required placeholder="Ваш email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">Пароль</label>
+                                    <input type="password" id="loginPassword" class="form-control" required placeholder="Ваш пароль">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success" style="width: 100%;">Войти</button>
+                                </div>
+                                <div class="form-footer">
+                                    Нет аккаунта? <a href="#" class="switch-to-register">Зарегистрироваться</a>
+                                </div>
+                            </form>
+
+                            <form id="registerForm" class="auth-form ${defaultTab === 'register' ? 'active' : ''}">
+                                <div class="form-group">
+                                    <label for="registerName">Имя</label>
+                                    <input type="text" id="registerName" class="form-control" required placeholder="Ваше имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerEmail">Email</label>
+                                    <input type="email" id="registerEmail" class="form-control" required placeholder="Ваш email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPassword">Пароль</label>
+                                    <input type="password" id="registerPassword" class="form-control" required placeholder="Придумайте пароль" minlength="6">
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPubgId">PUBG ID (опционально)</label>
+                                    <input type="text" id="registerPubgId" class="form-control" placeholder="Ваш PUBG ID">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success" style="width: 100%;">Зарегистрироваться</button>
+                                </div>
+                                <div class="form-footer">
+                                    Уже есть аккаунт? <a href="#" class="switch-to-login">Войти</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+
+                document.body.insertAdjacentHTML('beforeend', authModalHTML);
+                
+                // Переустанавливаем обработчики для нового модального окна
+                this.setupModalHandlers();
+            },
+
+            switchAuthTab(tabName) {
+                // Обновляем активные вкладки
+                const tabs = document.querySelectorAll('.auth-tab');
+                const forms = document.querySelectorAll('.auth-form');
+
+                tabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.getAttribute('data-tab') === tabName);
+                });
+
+                forms.forEach(form => {
+                    form.classList.toggle('active', form.id === `${tabName}Form`);
+                });
+            },
+
+            closeModals() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.remove();
+                });
+            },
+
+            async handleLogin() {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                try {
+                    const user = this.authenticateUser(email, password);
+                    if (user) {
+                        this.setCurrentUser(user);
+                        this.closeModals();
+                        this.showNotification('Успешный вход!');
+                        this.updateUI(user);
+                        this.updateAdminPanel(user);
+                    } else {
+                        this.showNotification('Неверный email или пароль', 'error');
+                    }
+                } catch (error) {
+                    this.showNotification('Ошибка при входе', 'error');
+                }
+            },
+
+            async handleRegister() {
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const pubgId = document.getElementById('registerPubgId').value;
+
+                try {
+                    const user = this.registerUser(name, email, password, pubgId);
+                    if (user) {
+                        this.setCurrentUser(user);
+                        this.closeModals();
+                        this.showNotification('Регистрация успешна!');
+                        this.updateUI(user);
+                        this.updateAdminPanel(user);
+                    }
+                } catch (error) {
+                    this.showNotification(error.message, 'error');
+                }
+            },
+
+            authenticateUser(email, password) {
+                const users = JSON.parse(localStorage.getItem(this.USERS_KEY)) || [];
+                return users.find(user => user.email === email && user.password === password);
+            },
+
+            registerUser(name, email, password, pubgId = '') {
+                const users = JSON.parse(localStorage.getItem(this.USERS_KEY)) || [];
+                
+                // Проверяем, существует ли пользователь
+                if (users.find(user => user.email === email)) {
+                    throw new Error('Пользователь с таким email уже существует');
+                }
+
+                // Создаем нового пользователя
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    email,
+                    password,
+                    pubgId,
+                    isAdmin: false,
+                    registrationDate: new Date().toISOString()
+                };
+
+                users.push(newUser);
+                localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+                
+                return newUser;
+            },
+
+            setCurrentUser(user) {
+                // Не сохраняем пароль в текущей сессии
+                const { password, ...userWithoutPassword } = user;
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(userWithoutPassword));
+            },
+
+            logout() {
+                localStorage.removeItem(this.STORAGE_KEY);
+                this.updateUI(null);
+                this.updateAdminPanel(null);
+                this.showNotification('Вы вышли из системы');
+            },
+
+            showNotification(message, type = 'success') {
+                // Универсальная функция показа уведомлений
+                const notification = document.createElement('div');
+                notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Автоматическое скрытие
+                setTimeout(() => {
+                    notification.classList.add('hiding');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+        };
+
+        // News System
+        // Sample news data
+        let news = [
+            {
+                id: 1,
+                title: "Черная пятница - скидки до 70%!",
+                content: "Только с 24 по 27 ноября специальные предложения на все пакеты UC. Не упустите шанс приобрести UC по самым низким ценам в году!",
+                date: "2023-11-20",
+                image: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                category: "promotions",
+                type: "site"
+            },
+            {
+                id: 2,
+                title: "Обновление системы доставки",
+                content: "Мы улучшили нашу систему доставки UC. Теперь покупки обрабатываются еще быстрее - в среднем за 1-2 минуты!",
+                date: "2023-11-15",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                category: "updates",
+                type: "site"
+            },
+            {
+                id: 3,
+                title: "Новый турнир PUBG Mobile",
+                content: "Приглашаем всех принять участие в нашем еженедельном турнире с призовым фондом 10 000 UC! Регистрация открыта до 30 ноября.",
+                date: "2023-11-10",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                category: "events",
+                type: "vk"
+            }
+        ];
+
+        // Load news from localStorage if available
+        if (localStorage.getItem('news')) {
+            news = JSON.parse(localStorage.getItem('news'));
+        }
+
+        // DOM elements
+        const newsContainer = document.getElementById('news-container');
+        const vkNewsContainer = document.getElementById('vk-news-container');
+        const siteNewsContainer = document.getElementById('site-news-container');
+        const newsForm = document.getElementById('news-form');
+        const vkForm = document.getElementById('vk-form');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('news-search');
+        const loadMoreBtn = document.getElementById('load-more');
+
+        // Current filters
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let displayedCount = 6;
+
+        // Initialize news display
+        function initNews() {
+            displayNews();
+            setupEventListeners();
+        }
+
+        // Display news based on current filters
+        function displayNews() {
+            const filteredNews = filterNews();
+            
+            // Clear containers
+            newsContainer.innerHTML = '';
+            vkNewsContainer.innerHTML = '';
+            siteNewsContainer.innerHTML = '';
+            
+            if (filteredNews.length === 0) {
+                showNoNewsMessage();
+                return;
+            }
+            
+            // Display limited number of news
+            const newsToShow = filteredNews.slice(0, displayedCount);
+            
+            newsToShow.forEach(item => {
+                const newsElement = createNewsElement(item);
+                newsContainer.appendChild(newsElement.cloneNode(true));
+                
+                if (item.type === 'vk') {
+                    vkNewsContainer.appendChild(newsElement.cloneNode(true));
+                } else {
+                    siteNewsContainer.appendChild(newsElement);
+                }
+            });
+            
+            // Show/hide load more button
+            loadMoreBtn.style.display = filteredNews.length > displayedCount ? 'block' : 'none';
+        }
+
+        // Filter news based on current criteria
+        function filterNews() {
+            return news.filter(item => {
+                // Apply category filter
+                if (currentFilter !== 'all' && item.category !== currentFilter) {
+                    return false;
+                }
+                
+                // Apply search filter
+                if (currentSearch && !item.title.toLowerCase().includes(currentSearch.toLowerCase()) && 
+                    !item.content.toLowerCase().includes(currentSearch.toLowerCase())) {
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        // Create news element
+        function createNewsElement(newsItem) {
+            const article = document.createElement('article');
+            article.className = 'news-card';
+            article.innerHTML = `
+                ${newsItem.image ? `<img src="${newsItem.image}" alt="${newsItem.title}" class="news-image">` : ''}
+                <div class="news-content">
+                    <div class="news-date">${formatDate(newsItem.date)}</div>
+                    <h3 class="news-title">${newsItem.title}</h3>
+                    <p class="news-excerpt">${newsItem.content}</p>
+                    <a href="#" class="read-more" data-id="${newsItem.id}">
+                        Читать далее <i class="fas fa-arrow-right"></i>
+                    </a>
+                    ${AuthManager.isAdmin() ? `<button class="btn btn-secondary" style="margin-top: 10px; width: 100%;" onclick="deleteNews(${newsItem.id})">Удалить</button>` : ''}
+                </div>
+            `;
+            return article;
+        }
+
+        // Show no news message
+        function showNoNewsMessage() {
+            const message = document.createElement('div');
+            message.className = 'no-news';
+            message.innerHTML = `
+                <i class="fas fa-newspaper"></i>
+                <h3>Новостей пока нет</h3>
+                <p>Здесь будут появляться последние новости и обновления нашего магазина.</p>
+            `;
+            newsContainer.appendChild(message);
+            vkNewsContainer.appendChild(message.cloneNode(true));
+            siteNewsContainer.appendChild(message.cloneNode(true));
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ru-RU', options);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab switching
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(btn.dataset.tab).classList.add('active');
+                });
+            });
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    displayedCount = 6;
+                    displayNews();
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                currentSearch = searchInput.value;
+                displayedCount = 6;
+                displayNews();
+            });
+            
+            // Load more button
+            loadMoreBtn.addEventListener('click', () => {
+                displayedCount += 6;
+                displayNews();
+            });
+            
+            // News form submission
+            if (newsForm) {
+                newsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    addNews();
+                });
+            }
+            
+            // VK form submission
+            if (vkForm) {
+                vkForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    importVKPost();
+                });
+            }
+            
+            // Clear form button
+            const clearFormBtn = document.getElementById('clear-form');
+            if (clearFormBtn) {
+                clearFormBtn.addEventListener('click', () => {
+                    newsForm.reset();
+                });
+            }
+            
+            // Fetch VK posts button
+            const fetchVKPostsBtn = document.getElementById('fetch-vk-posts');
+            if (fetchVKPostsBtn) {
+                fetchVKPostsBtn.addEventListener('click', fetchVKPosts);
+            }
+        }
+
+        // Add new news
+        function addNews() {
+            const title = document.getElementById('news-title').value;
+            const content = document.getElementById('news-content').value;
+            const category = document.getElementById('news-category').value;
+            const image = document.getElementById('news-image').value;
+            
+            const newNews = {
+                id: Date.now(),
+                title,
+                content,
+                date: new Date().toISOString().split('T')[0],
+                image: image || null,
+                category,
+                type: 'site'
+            };
+            
+            news.unshift(newNews);
+            saveNews();
+            displayNews();
+            newsForm.reset();
+            
+            showNotification('Новость успешно опубликована!', 'success');
+        }
+
+        // Delete news
+        function deleteNews(id) {
+            if (confirm('Вы уверены, что хотите удалить эту новость?')) {
+                news = news.filter(item => item.id !== id);
+                saveNews();
+                displayNews();
+                showNotification('Новость удалена', 'success');
+            }
+        }
+
+        // Import VK post
+        function importVKPost() {
+            const postId = document.getElementById('vk-post-id').value;
+            
+            // In a real app, this would make an API call to VK
+            // For demo purposes, we'll simulate it
+            
+            // Simulate API delay
+            showNotification('Импорт поста...', 'success');
+            
+            setTimeout(() => {
+                const newVKNews = {
+                    id: Date.now(),
+                    title: `Импортированный пост из ВК: ${postId}`,
+                    content: "Это пример импортированного поста из ВКонтакте. В реальном приложении здесь был бы реальный текст поста.",
+                    date: new Date().toISOString().split('T')[0],
+                    image: "https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    category: "general",
+                    type: "vk"
+                };
+                
+                news.unshift(newVKNews);
+                saveNews();
+                displayNews();
+                vkForm.reset();
+                
+                showNotification('Пост успешно импортирован из ВК!', 'success');
+            }, 1500);
+        }
+
+        // Fetch VK posts
+        function fetchVKPosts() {
+            // In a real app, this would make an API call to VK to get recent posts
+            // For demo purposes, we'll simulate it
+            
+            showNotification('Загрузка постов из ВК...', 'success');
+            
+            setTimeout(() => {
+                const newVKPosts = [
+                    {
+                        id: Date.now() + 1,
+                        title: "Новый сезон PUBG Mobile",
+                        content: "Начался новый сезон PUBG Mobile с обновленным боевым пропуском и новыми наградами!",
+                        date: new Date().toISOString().split('T')[0],
+                        image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        category: "updates",
+                        type: "vk"
+                    },
+                    {
+                        id: Date.now() + 2,
+                        title: "Розыгрыш 5000 UC",
+                        content: "Участвуйте в нашем розыгрыше и получите шанс выиграть 5000 UC! Для участия просто оставьте комментарий под этим постом.",
+                        date: new Date().toISOString().split('T')[0],
+                        image: "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        category: "events",
+                        type: "vk"
+                    }
+                ];
+                
+                news.unshift(...newVKPosts);
+                saveNews();
+                displayNews();
+                
+                showNotification('Загружено 2 новых поста из ВК!', 'success');
+            }, 2000);
+        }
+
+        // Save news to localStorage
+        function saveNews() {
+            localStorage.setItem('news', JSON.stringify(news));
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('vk-notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            AuthManager.init();
+            initNews();
+        });
+    </script>
+</body>
+</html>
